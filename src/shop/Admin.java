@@ -13,7 +13,7 @@ public class Admin extends User {
 
     Items item =new Items();
 //    User user = new User();
-
+    Cart cart =new Cart();
     public void admin_page() {
         System.out.println("Welcome to the Admin page!");
 //        this.user = new User();
@@ -130,12 +130,22 @@ public class Admin extends User {
     }
 
     public void add_products() {
+        System.out.println("You want to 1> add product or 2> remove product.\n Enter ur choice :");
+        Scanner sc=new Scanner(System.in);
+        int c=sc.nextInt();
+        if(c==1){
+            item.addNew_item();
+        }
+        else if(c==2){
 
+        }
+        else{
+            System.out.println("Wrong Choice ");
+        }
     }
 
     private void product_page() {
-        item.item_show();
-        view_groceries();
+        add_products();
     }
     private void printAllUsers() {
         try (Connection connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD)) {

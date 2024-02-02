@@ -1,33 +1,54 @@
-//package shop;
-//
-//import java.util.ArrayList;
-//import java.util.Scanner;
-//
-//public class Cart{
-//    Items item=new Items();
-//    void add_cart(){
-//        item.item_add();
-//    }
-//    void view_cart() {
-//        System.out.println("Items available in your cart are :");
-//        ArrayList<String> cartList = item.getCartList();
-//        for (String item : cartList) {
-//            System.out.println(item);
-//        }
-//    }
-//    void remove_cart(){
-//        Scanner sc=new Scanner(System.in);
-//        System.out.println("Enter the product name to remove from cart list:");
-//        String cart_name = sc.nextLine();
-//        cart_name=cart_name.toLowerCase();
-//        ArrayList<String> cartList = item.getCartList();
-//        for (int i = 0; i < cartList.size(); i++) {
-//            String currentItem = cartList.get(i).toLowerCase();
-//            if (cart_name.equals(currentItem)) {
-//                System.out.println(cartList.get(i) + " removed from your cart list");
-//                cartList.remove(i);
-//                return;
-//            }
-//        }
-//    }
-//}
+package shop;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Cart {
+    Items item=new Items();
+    Scanner sc=new Scanner(System.in);
+    ArrayList<String> cart_list = new ArrayList<String>();
+    private int choice;
+    public void add_cart(){
+        Scanner sc = new Scanner(System.in);
+        choice=item.getChoice();
+        System.out.println("Please Enter item name to your cart: ");
+        String itemName = sc.nextLine().toLowerCase();
+        switch (choice){
+            case 1:
+                if (item.isElectronicItem(itemName)) {
+                    System.out.println(itemName + " is added to the cart.");
+                    cart_list.add(itemName);
+                } else {
+                    System.out.println(itemName + " is not available.");
+                }
+                break;
+            case 2:
+                if (item.isGroceriesItem(itemName)) {
+                    System.out.println(itemName + " is added to the cart.");
+                    cart_list.add(itemName);
+                } else {
+                    System.out.println(itemName + " is not available.");
+                }
+                break;
+            default:
+                System.out.println("Wrong Choice");
+        }
+    }
+    public void view_cart(){
+        System.out.println("Your Cart Items are:");
+        int serialNumber = 1;
+        for (String cart : cart_list) {
+            System.out.println(serialNumber + ". " + cart);
+            serialNumber++;
+        }
+    }
+    public void remove_cart(){
+        view_cart();
+        System.out.println("Enter number u want to remove : ");
+        int n;
+        Scanner sc =new Scanner(System.in);
+        n=sc.nextInt();
+        cart_list.remove((n-1));
+    }
+}
+

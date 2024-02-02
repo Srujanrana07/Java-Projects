@@ -10,6 +10,7 @@ public class User{
 
     Scanner sc=new Scanner(System.in);
     Items item=new Items();
+    Cart cart =new Cart();
     private static String username;
     private static void setUserUsername(String userUsername) {
         username = userUsername;
@@ -40,140 +41,21 @@ public class User{
             ch = scanner.nextInt();
 
             if(ch==1){
-                item.item_show();
-                view_groceries();
-                add_cart();
+                item.groceries_show();
+                item.view_item();
+                cart.add_cart();
             }else if (ch==6)
-                view_cart();
+                cart.view_cart();
             else if(ch==8)
                 editProfile(username);
             else if(ch==4)
-                add_cart();
+                cart.add_cart();
             else if(ch==5)
-                remove_cart();
+                cart.remove_cart();
         } while (ch != 9);
     }
 //
-    protected void view_groceries() {
-//        item.item_show();
-        System.out.println("Please Enter Ur choice :");
-        Scanner sc=new Scanner(System.in);
-        int choice=sc.nextInt();
-        switch (choice){  //showing in categories the item available
-            case 1:
-                System.out.println("Showing Electronics items: ");
-                for (String electronic : item.electronics) {
-                    System.out.print (electronic+'\n');
-                }
-                break;
-            case 2:
-                System.out.println("Showing Groceries items: ");
-                for (String groceries : item.groceries) {
-                    System.out.print (groceries+'\n');
-                }
-                break;
-            case 3:
-                System.out.println("Showing Medicine items: ");
-                for (String medicine : item.medicines) {
-                    System.out.print(medicine + "\n");
-                }
-                break;
-            case 4:
-                System.out.println("Showing Tvs and Mobiles items: ");
-                for (String TVsAndMobiles : item.TVsAndMobiles) {
-                    System.out.print(TVsAndMobiles + "\n");
-                }
-                break;
-            case 5:
-                System.out.println("Showing Home & Kitchen items: ");
-                break;
-            case 6:
-                System.out.println("Showing Decor items: ");
-                break;
-            case 7:
-                System.out.println("Showing Beauty items: ");
-                break;
-        }
-    }
-    ArrayList<String> cart_list = new ArrayList<String>();
-    private void add_cart(){
-        System.out.println("\n ***************************************************************************************************************\n");
-        System.out.println("Please Enter item name to your cart: ");
-        String category = sc.nextLine();
-        category=category.toLowerCase();
-        for (int i=0;i< item.electronics.length;i++){
-            String currentItem = item.electronics[i].toLowerCase();
-            if (category.equals(currentItem)) {
-                System.out.println(item.electronics[i] + " added to your cart list");
-                cart_list.add(item.electronics[i]);
-                return;
-            }
-        }
-        for (int i=0;i< item.groceries.length;i++){
-            String currentItem = item.groceries[i].toLowerCase();
-            if (category.equals(currentItem)) {
-                System.out.println(item.groceries[i] + " added to your cart list");
-                cart_list.add(item.groceries[i]);
-                return;
-            }
-        }
-        for (int i=0;i< item.medicines.length;i++){
-            String currentItem = item.medicines[i].toLowerCase();
-            if (category.equals(currentItem)) {
-                System.out.println(item.medicines[i] + " added to your cart list");
-                cart_list.add(item.medicines[i]);
-                return;
-            }
-        }
-        for (int i=0;i< item.TVsAndMobiles.length;i++){
-            String currentItem = item.TVsAndMobiles[i].toLowerCase();
-            if (category.equals(currentItem)) {
-                System.out.println(item.TVsAndMobiles[i] + " added to your cart list");
-                cart_list.add(item.TVsAndMobiles[i]);
-                return;
-            }
-        }
-        for (int i=0;i< item.HomeAndKitchen.length;i++){
-            String currentItem = item.HomeAndKitchen[i].toLowerCase();
-            if (category.equals(currentItem)) {
-                System.out.println(item.HomeAndKitchen[i] + " added to your cart list");
-                cart_list.add(item.HomeAndKitchen[i]);
-                return;
-            }
-        }
-        for (int i=0;i< item.HomeDecor.length;i++){
-            String currentItem = item.HomeDecor[i].toLowerCase();
-            if (category.equals(currentItem)) {
-                System.out.println(item.HomeDecor[i] + " added to your cart list");
-                cart_list.add(item.HomeDecor[i]);
-                return;
-            }
-        }
-        for (int i=0;i< item.BeautyItems.length;i++){
-            String currentItem = item.BeautyItems[i].toLowerCase();
-            if (category.equals(currentItem)) {
-                System.out.println(item.BeautyItems[i] + " added to your cart list");
-                cart_list.add(item.BeautyItems[i]);
-                return;
-            }
-        }
-    }
-    private void view_cart(){
-        System.out.println("Your Cart Items are:");
-        int serialNumber = 1;
-        for (String cart : cart_list) {
-            System.out.println(serialNumber + ". " + cart);
-            serialNumber++;
-        }
-    }
-    private void remove_cart(){
-        view_cart();
-        System.out.println("Enter number u want to remove : ");
-        int n;
-        Scanner sc =new Scanner(System.in);
-        n=sc.nextInt();
-        cart_list.remove((n-1));
-    }
+
 //    protected void printAllUsers() {
 //        try (Connection connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD)) {
 //            String query = "SELECT * FROM user";
