@@ -24,9 +24,7 @@ To integrate MySQL with the Shopping Management System, follow these steps:
 
 **1. Setting up MySQL Database:**
    - Install MySQL Server on your machine if not already installed.
-   - Create a new database for the shopping management system, e.g., `shopping_db`.
-   - Create tables to store data such as `items` table to store item details.
-
+   - Open the file provided
 **2. JDBC Configuration:**
    - Download the MySQL JDBC Connector JAR file from the official MySQL website or Maven repository.
    - Add the downloaded JAR file to your project's classpath.
