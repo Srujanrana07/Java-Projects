@@ -15,8 +15,9 @@ This is a simple shopping management system implemented in Java. The program all
 To run the program locally, follow these steps:
 
 **Clone the Repository**: 
+```
 git clone https://github.com/Srujanrana07/Java-Projects.git
-
+```
 
 ## Usage
 
