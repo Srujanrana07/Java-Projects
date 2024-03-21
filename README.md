@@ -1,4 +1,4 @@
-# Simple Shopping Management System
+# Shopping Management System
 
 This is a simple shopping management system implemented in Java. The program allows users to perform various tasks related to managing a shopping system, such as adding items to the inventory, updating item details, displaying available items, and processing customer purchases.
 
