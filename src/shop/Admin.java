@@ -16,28 +16,26 @@ public class Admin extends User {
     Cart cart =new Cart();
     public void admin_page() {
         System.out.println("Welcome to the Admin page!");
-//        this.user = new User();
         Scanner sc=new Scanner(System.in);
         int ch;
         do {
             System.out.println("*****************************************************\n");
-            System.out.println("1 - MANAGE PRODUCTS");
+            System.out.println("1 - MANAGE PRODUCTS");//Add complete Remove
             System.out.println("2 - ADD CUSTOMERS");//complete
             System.out.println("3 - VIEW CUSTOMERS");//complete
             System.out.println("4 - EDIT PROFILE"); //complete
             System.out.println("5 - ADD NEW ADMIN");//complete
-            System.out.println("6 - REMOVE CUSTOMERS");
-            System.out.println("7 - LOGOUT FROM SYSTEM");
+            System.out.println("6 - REMOVE CUSTOMERS");//complete
+            System.out.println("7 - LOGOUT FROM SYSTEM");//complete
             System.out.println("*****************************************************\n");
             System.out.print("Enter choice : ");
             ch=sc.nextInt();
             if (ch == 1) {
-                product_page();
+                products();
             } else if (ch == 2) {
                 add_customer();
             } else if (ch == 3) {
-//                user.printAllUsers();
-                  printAllUsers();
+                printAllUsers();
             } else if (ch == 4) {
                 editProfile(UID);
             } else if (ch == 5) {
@@ -59,7 +57,6 @@ public class Admin extends User {
         String UserUsername=sc.nextLine();
         System.out.println("Enter THE USER'S NAME U WANT TO DELETE");
         String UserName=sc.nextLine();
-//        user.deleteUser(UserUsername,UserName);
         deleteUser(UserUsername,UserName);
     }
 
@@ -71,10 +68,10 @@ public class Admin extends User {
         Scanner sc = new Scanner(System.in);
         System.out.println("\nWELCOME TO CUSTOMER REGISTRATION PAGE\n");
         System.out.println("*****************************************************\n");
-//        Random random = new Random();
-//        char letter = (char) ('A' + random.nextInt(26));
-//        int number = 100 + random.nextInt(900);
-//        String UID = String.valueOf(letter) + number;
+        Random random = new Random();
+        char letter = (char) ('A' + random.nextInt(26));
+        int number = 100 + random.nextInt(900);
+        String UID = String.valueOf(letter) + number;
 
         System.out.print("Enter Name = ");
         String name = sc.nextLine();
@@ -86,8 +83,7 @@ public class Admin extends User {
         String mobno = sc.nextLine();
 
         try {
-//            user.saveUserToDatabase(name, mobno, username, password);
-            saveUserToDatabase(name, mobno, username, password);
+            saveUserToDatabase(name, mobno, username, password,String.valueOf(UID));
             System.out.println("REGISTRATION DONE SUCCESSFULLY! FOR " + name);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -103,9 +99,6 @@ public class Admin extends User {
         System.out.println("\nWELCOME TO ADMIN REGISTRATION PAGE\n");
         System.out.println("*****************************************************\n");
 
-//        Random random = new Random();
-//        int UID = 100 + random.nextInt(100);
-//        System.out.println("ADMIN ID = " + UID);
         Random random = new Random();
         char letter = (char) ('A' + random.nextInt(26));
         int number = 10 + random.nextInt(90);
@@ -129,7 +122,7 @@ public class Admin extends User {
         }
     }
 
-    public void add_products() {
+    private void products() {
         System.out.println("You want to 1> add product or 2> remove product.\n Enter ur choice :");
         Scanner sc=new Scanner(System.in);
         int c=sc.nextInt();
@@ -137,16 +130,13 @@ public class Admin extends User {
             item.addNew_item();
         }
         else if(c==2){
-
+            item.remove_item();
         }
         else{
             System.out.println("Wrong Choice ");
         }
     }
 
-    private void product_page() {
-        add_products();
-    }
     private void printAllUsers() {
         try (Connection connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD)) {
             String query = "SELECT * FROM user";
@@ -166,10 +156,6 @@ public class Admin extends User {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public void remove_product( ) {
-
     }
     private static String UID;
 
