@@ -1,117 +1,151 @@
-import java.sql.*;
+package gui;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.Random;
-import java.util.Scanner;
-import shop.Admin;
-import shop.User;
+import shop.*;
 
-public class Shopping {
-    static int ch;
-    static Admin admin = new Admin();
-    static User user = new User();
 
-    public static void main(String[] args) throws SQLException {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("WELCOME TO ONLINE SHOPPING SYSTEM\n");
-        System.out.println("***************************************************************************************************************\n");
-        System.out.println("1 - REGISTER AS CUSTOMER");
-        System.out.println("2 - LOGIN AS CUSTOMER");
-        System.out.println("3 - LOGIN AS ADMIN");
-        System.out.println("4 - EXIT");
-        System.out.println("***************************************************************************************************************\n");
-        System.out.print("Enter choice : ");
-        ch = sc.nextInt();
-        if (ch == 1)
-            registerCustomer();
-        else if (ch == 2)
-            loginCustomer();
-        else if (ch == 3)
-            loginAdmin();
-        else if (ch == 4)
-            exit();
-        else
-            System.out.println("Wrong choice");
+public class Shopping extends JFrame {
+    public final User user;
+    private final Admin admin = new Admin();
+    private final JPanel mainPanel;
+    private final JLabel welcomeLabel;
+    private final JButton registerCustomerButton;
+    private final JButton loginCustomerButton;
+    private final JButton loginAdminButton;
+    private final JButton exitButton;
+
+    public Shopping() {
+        setTitle("Online gui.Shopping System");
+        setSize(500, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+
+        welcomeLabel = new JLabel("WELCOME TO ONLINE SHOPPING SYSTEM");
+        welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        registerCustomerButton = new JButton("REGISTER AS CUSTOMER");
+        loginCustomerButton = new JButton("LOGIN AS CUSTOMER       ");
+        loginAdminButton = new JButton(" LOGIN AS ADMIN               ");
+        exitButton = new JButton("EXIT                                      ");
+
+        ActionListener buttonListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JButton button = (JButton) e.getSource();
+                if (button == registerCustomerButton) {
+                    try {
+                        registerCustomer();
+                    } catch (SQLException ex) {
+                        handleException(ex);
+                    }
+                } else if (button == loginCustomerButton) {
+                    try {
+                        loginCustomer();
+                    } catch (SQLException ex) {
+                        handleException(ex);
+                    }
+                } else if (button == loginAdminButton) {
+                    try {
+                        loginAdmin();
+                    } catch (SQLException ex) {
+                        handleException(ex);
+                    }
+                } else if (button == exitButton) {
+                    exit();
+                }
+            }
+        };
+
+        Dimension buttonSize = new Dimension(200, 50);
+        registerCustomerButton.setPreferredSize(buttonSize);
+        loginCustomerButton.setPreferredSize(buttonSize);
+        loginAdminButton.setPreferredSize(buttonSize);
+        exitButton.setPreferredSize(buttonSize);
+
+        registerCustomerButton.addActionListener(buttonListener);
+        loginCustomerButton.addActionListener(buttonListener);
+        loginAdminButton.addActionListener(buttonListener);
+        exitButton.addActionListener(buttonListener);
+
+        mainPanel.add(welcomeLabel);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        mainPanel.add(registerCustomerButton);
+        mainPanel.add(loginCustomerButton);
+        mainPanel.add(loginAdminButton);
+        mainPanel.add(exitButton);
+
+        add(mainPanel);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        user = new User();
     }
 
+    public static void main(String[] args) {
+        new Shopping();
+    }
 
-    static void loginAdmin() {
-        Scanner scanner = new Scanner(System.in);
-        String username_admin, pass ,UID;
-        System.out.println("\nWELCOME TO ADMIN LOGIN PAGE\n");
-        System.out.println("**************************************************************************************\n");
-        try {
-            System.out.println("ENTER UR UID : ");
-            UID = scanner.nextLine();
-            System.out.print("ENTER UR USERNAME : ");
-            username_admin = scanner.nextLine();
-            System.out.print("ENTER PASSWORD : ");
-            pass = scanner.nextLine();
-
-            if (Admin.validate_Admin(username_admin, pass,UID)) {
-                System.out.println("LOGIN DONE SUCCESSFULLY !");
-                admin.admin_page();
-            } else {
-                System.out.println("Invalid username or password. Please try again.");
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+    private void loginAdmin() throws SQLException {
+        String username_admin, pass, UID;
+        UID = JOptionPane.showInputDialog(null, "ENTER UR UID : ");
+        username_admin = JOptionPane.showInputDialog(null, "ENTER UR USERNAME : ");
+        pass = JOptionPane.showInputDialog(null, "ENTER PASSWORD : ");
+        if (Admin.validate_Admin(username_admin, pass, UID)) {
+            JOptionPane.showMessageDialog(null, "LOGIN DONE SUCCESSFULLY !");
+            admin.admin_page();
+        } else {
+            JOptionPane.showMessageDialog(null, "Invalid username or password. Please try again.");
         }
     }
-    static void loginCustomer() {
-        Scanner scanner = new Scanner(System.in);
-        String username, pass;
-        System.out.println("\nWELCOME TO CUSTOMER LOGIN PAGE\n");
-        System.out.println("**********************************************************************************\n");
-        try {
-            System.out.print("ENTER UR USERNAME : ");
-            username = scanner.nextLine();
-            System.out.print("ENTER PASSWORD : ");
-            pass = scanner.nextLine();
 
-            if (User.validate_Customer(username, pass)) {
-                System.out.println("LOGIN DONE SUCCESSFULLY !");
-                user.CustomerPage();
-            } else {
-                System.out.println("Invalid username or password. Please try again.");
-                System.out.println("Please Register Your username if not found ");
-                Scanner sc = new Scanner(System.in);
-                System.out.println("1>Register \n2>Re Login");
-                int n = sc.nextInt();
-                if(n == 1){
-                    registerCustomer();
-                }else if(n== 2)
-                    loginCustomer();
-
+    private void loginCustomer() throws SQLException {
+        String username, pass, UID;
+        UID = JOptionPane.showInputDialog(null, "ENTER UR UID : ");
+        username = JOptionPane.showInputDialog(null, "ENTER UR USERNAME : ");
+        pass = JOptionPane.showInputDialog(null, "ENTER PASSWORD : ");
+        if (User.validate_Customer(username, pass)) {
+            JOptionPane.showMessageDialog(null, "LOGIN DONE SUCCESSFULLY !");
+            getUser().CustomerPage();
+        } else {
+            JOptionPane.showMessageDialog(null, "Invalid username or password. Please try again.");
+            int choice = JOptionPane.showConfirmDialog(null, "Do you want to register?", "Please Register Your username if not found", JOptionPane.YES_NO_OPTION);
+            if (choice == JOptionPane.YES_OPTION) {
+                registerCustomer();
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
-    static void registerCustomer() throws SQLException {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("\nWELCOME TO CUSTOMER REGISTRATION PAGE\n");
-        System.out.println("*****************************************************\n");
-//        Random random = new Random();
-//        char letter = (char) ('A' + random.nextInt(26));
-//        int number = 10 + random.nextInt(90);
-//        String UID = String.valueOf(letter) + number;
-
-        System.out.print("Enter Name = ");
-        String name = sc.nextLine();
-        System.out.print("Enter Password = ");
-        String password = sc.nextLine();
-        System.out.print("Enter Username = ");
-        String username = sc.nextLine();
-        System.out.print("Enter Contact Number = ");
-        String mobno = sc.nextLine();
-        user.saveUserToDatabase(name, mobno, username, password);
-
-        System.out.println("REGISTRATION DONE SUCCESSFULLY! FOR " + name);
+    private void registerCustomer() throws SQLException {
+        Random random = new Random();
+        char letter = (char) ('A' + random.nextInt(26));
+        int number = 100 + random.nextInt(900);
+        String UID = String.valueOf(letter) + number;
+        String name = JOptionPane.showInputDialog(null, "Enter Name = ");
+        String password = JOptionPane.showInputDialog(null, "Enter Password = ");
+        String username = JOptionPane.showInputDialog(null, "Enter Username = ");
+        String mobno = JOptionPane.showInputDialog(null, "Enter Contact Number = ");
+        getUser().saveUserToDatabase(name, mobno, username, password, UID);
+        JOptionPane.showMessageDialog(null, "REGISTRATION DONE SUCCESSFULLY! FOR " + name);
         loginCustomer();
     }
-    static void exit(){
-        System.out.println("Thankyou For Visiting Us");
+
+    private void exit() {
+        dispose();
+        System.exit(0);
+    }
+
+    private void handleException(Exception ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(null, "An error occurred: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public User getUser() {
+        return user;
     }
 }
