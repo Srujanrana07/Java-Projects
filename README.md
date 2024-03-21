@@ -18,6 +18,24 @@ To run the program locally, follow these steps:
 ```
 git clone https://github.com/Srujanrana07/Java-Projects.git
 ```
+## MySQL Database Integration
+
+To integrate MySQL with the Shopping Management System, follow these steps:
+
+**1. Setting up MySQL Database:**
+   - Install MySQL Server on your machine if not already installed.
+   - Create a new database for the shopping management system, e.g., `shopping_db`.
+   - Create tables to store data such as `items` table to store item details.
+
+**2. JDBC Configuration:**
+   - Download the MySQL JDBC Connector JAR file from the official MySQL website or Maven repository.
+   - Add the downloaded JAR file to your project's classpath.
+
+## JDBC Connector JAR File
+
+Download the MySQL JDBC Connector JAR file from the official MySQL website or Maven repository. You can add this JAR file to your project's classpath to enable JDBC connectivity with MySQL.
+
+**Download Link:** [MySQL JDBC Connector](https://dev.mysql.com/downloads/connector/j/)
 
 ## Usage
 
